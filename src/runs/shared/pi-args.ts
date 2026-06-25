@@ -39,6 +39,7 @@ interface BuildPiArgsInput {
 	systemPromptMode?: "append" | "replace";
 	inheritProjectContext: boolean;
 	inheritSkills: boolean;
+	skillsPaths?: string[];
 	requireReadTool?: boolean;
 	tools?: string[];
 	extensions?: string[];
@@ -138,6 +139,12 @@ export function buildPiArgs(input: BuildPiArgsInput): BuildPiArgsResult {
 
 	if (!input.inheritSkills) {
 		args.push("--no-skills");
+	}
+
+	if (input.skillsPaths?.length) {
+		for (const skillsPath of input.skillsPaths) {
+			args.push("--skill", skillsPath);
+		}
 	}
 
 	let tempDir: string | undefined;

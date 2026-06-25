@@ -15,6 +15,7 @@ export const KNOWN_FIELDS = new Set([
 	"defaultContext",
 	"skill",
 	"skills",
+	"skillsPath",
 	"extensions",
 	"subagentOnlyExtensions",
 	"output",

@@ -192,6 +192,7 @@ async function runSingleAttempt(
 		systemPromptMode: agent.systemPromptMode,
 		inheritProjectContext: agent.inheritProjectContext,
 		inheritSkills: agent.inheritSkills,
+		skillsPaths: agent.skillsPath,
 		requireReadTool: Boolean(shared.resolvedSkillNames?.length),
 		tools: agent.tools,
 		extensions: agent.extensions,

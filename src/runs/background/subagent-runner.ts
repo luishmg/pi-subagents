@@ -759,6 +759,7 @@ async function runSingleStep(
 			model: candidate,
 			inheritProjectContext: step.inheritProjectContext,
 			inheritSkills: step.inheritSkills,
+			skillsPaths: step.skillsPath,
 			requireReadTool: Boolean(step.skills?.length),
 			tools: step.tools,
 			extensions: step.extensions,
