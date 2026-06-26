@@ -1,8 +1,6 @@
 ---
 name: researcher
 description: Conducts web research, finds documentation, benchmarks, and produces concise research briefs with sources
-model: openrouter/deepseek/deepseek-v4-pro
-thinking: high
 systemPromptMode: replace
 inheritProjectContext: false
 inheritSkills: false

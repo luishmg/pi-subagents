@@ -1,7 +1,6 @@
 ---
 name: engineer
 description: Implements approved plans, writes code, runs tests, and validates builds
-thinking: high
 systemPromptMode: replace
 inheritProjectContext: true
 extensions: ~/Projects/pi-config/extensions, ~/Projects/pi-config/eng-extensions

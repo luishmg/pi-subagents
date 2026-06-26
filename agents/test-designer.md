@@ -1,8 +1,6 @@
 ---
 name: test-designer
 description: Writes, improves, and maintains automated tests
-model: openrouter/moonshotai/kimi-k2.7-code
-thinking: high
 systemPromptMode: replace
 inheritProjectContext: true
 inheritSkills: false
