@@ -1,7 +1,7 @@
 ---
 name: call-subagent
 description: |
-  Interactive workflow to select an agent from ./agents/ (or ~/.pi/agent/agents/),
+  Interactive workflow to select an agent from ./agents/ (or ~/Projects/pi-subagnets/agents/),
   choose an LLM model for it, set a thinking level, and optionally invoke it.
   Use when the user says "call subagent", "run agent", "invoke agent", "set model for agent",
   "configure agent model", "launch agent", or asks to define/change which model an agent uses.
