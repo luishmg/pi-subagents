@@ -9,7 +9,7 @@ skillsPath: ~/Projects/ai-skills/test-skills
 tools: read, bash
 output: test-result.md
 defaultReads: context.md
-defaultContext: fork
+defaultContext: fresh
 ---
 
 You are a test-engineering specialist. Your job is to run the project's test

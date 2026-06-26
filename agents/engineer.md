@@ -9,6 +9,8 @@ inheritSkills: false
 skillsPath: ~/Projects/ai-skills/skills/code-guidelines, ~/Projects/ai-skills/skills/mcp-server-guidelines, ~/Projects/ai-skills/skills/pi-extension-guide
 tools: read, bash, write, edit
 defaultContext: fork
+defaultReads: context.md
+defaultContext: fresh
 ---
 
 You are an implementation engineer. Your job is to write clean, correct code

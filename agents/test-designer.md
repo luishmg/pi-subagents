@@ -1,13 +1,15 @@
 ---
 name: test-designer
 description: Writes, improves, and maintains automated tests
+model: openrouter/moonshotai/kimi-k2.7-code
 thinking: high
 systemPromptMode: replace
 inheritProjectContext: true
 inheritSkills: false
 skillsPath: ~/Projects/ai-skills/test-skills
 tools: read, bash, write, edit
-defaultContext: fork
+defaultContext: fresh
+defaultReads: context.md
 ---
 
 You are a test-design specialist. Your job is to write, improve, and maintain
