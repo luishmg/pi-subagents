@@ -104,6 +104,7 @@ export interface AgentConfig {
 	skills?: string[];
 	skillsPath?: string[];
 	extensions?: string[];
+	extensionsPath?: string[];
 	subagentOnlyExtensions?: string[];
 	output?: string;
 	defaultReads?: string[];
@@ -1070,6 +1071,10 @@ function loadAgentsFromDir(dir: string, source: AgentSource): AgentConfig[] {
 			?.split(",")
 			.map((s) => s.trim())
 			.filter(Boolean);
+		const extensionsPath = frontmatter.extensionsPath
+			?.split(",")
+			.map((s) => s.trim())
+			.filter(Boolean);
 		const fallbackModels = frontmatter.fallbackModels
 			?.split(",")
 			.map((model) => model.trim())
@@ -1142,6 +1147,7 @@ function loadAgentsFromDir(dir: string, source: AgentSource): AgentConfig[] {
 			skills: skills && skills.length > 0 ? skills : undefined,
 			skillsPath: skillsPath && skillsPath.length > 0 ? skillsPath : undefined,
 			extensions,
+			extensionsPath: extensionsPath && extensionsPath.length > 0 ? extensionsPath : undefined,
 			subagentOnlyExtensions,
 			output: frontmatter.output,
 			defaultReads: defaultReads && defaultReads.length > 0 ? defaultReads : undefined,

@@ -197,6 +197,7 @@ async function runSingleAttempt(
 		requireReadTool: Boolean(shared.resolvedSkillNames?.length),
 		tools: agent.tools,
 		extensions: agent.extensions,
+		extensionsPaths: agent.extensionsPath,
 		subagentOnlyExtensions: agent.subagentOnlyExtensions,
 		systemPrompt: shared.systemPrompt,
 		mcpDirectTools: agent.mcpDirectTools,

@@ -44,6 +44,7 @@ interface BuildPiArgsInput {
 	tools?: string[];
 	extensions?: string[];
 	subagentOnlyExtensions?: string[];
+	extensionsPaths?: string[];
 	systemPrompt?: string | null;
 	mcpDirectTools?: string[];
 	cwd?: string;
@@ -144,6 +145,12 @@ export function buildPiArgs(input: BuildPiArgsInput): BuildPiArgsResult {
 	if (input.skillsPaths?.length) {
 		for (const skillsPath of input.skillsPaths) {
 			args.push("--skill", skillsPath);
+		}
+	}
+
+	if (input.extensionsPaths?.length) {
+		for (const extensionsPath of input.extensionsPaths) {
+			args.push("--extension", extensionsPath);
 		}
 	}
 

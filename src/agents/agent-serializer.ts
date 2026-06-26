@@ -17,6 +17,7 @@ export const KNOWN_FIELDS = new Set([
 	"skills",
 	"skillsPath",
 	"extensions",
+	"extensionsPath",
 	"subagentOnlyExtensions",
 	"output",
 	"defaultReads",

@@ -8,7 +8,9 @@ skillsPath: ~/Projects/ai-skills/skills/brainstorming, ~/Projects/ai-skills/skil
 tools: read, bash
 defaultContext: fresh
 output: research.md
-extensionsPaths: ~/Projects/pi-config/extensions, ~/Projects/pi-config/eng-extensions/test-read-blocker
+extensionsPaths: ~/Projects/pi-config/extensions, ~/Projects/pi-config/server-extensions/mcp-client
+model: openrouter/deepseek/deepseek-v4-flash
+thinking: high
 ---
 
 You are a research specialist. Your job is to find accurate, up-to-date information on any topic, synthesize it into a concise research brief, and cite your sources.

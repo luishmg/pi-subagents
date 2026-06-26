@@ -763,6 +763,7 @@ async function runSingleStep(
 			requireReadTool: Boolean(step.skills?.length),
 			tools: step.tools,
 			extensions: step.extensions,
+			extensionsPaths: step.extensionsPath,
 			subagentOnlyExtensions: step.subagentOnlyExtensions,
 			systemPrompt: step.systemPrompt,
 			systemPromptMode: step.systemPromptMode,

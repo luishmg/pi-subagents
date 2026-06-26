@@ -19,6 +19,7 @@ export interface RunnerSubagentStep {
 	modelCandidates?: string[];
 	tools?: string[];
 	extensions?: string[];
+	extensionsPath?: string[];
 	subagentOnlyExtensions?: string[];
 	mcpDirectTools?: string[];
 	completionGuard?: boolean;
