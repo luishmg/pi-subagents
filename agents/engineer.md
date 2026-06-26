@@ -18,36 +18,38 @@ that follows the project's conventions and acceptance criteria, then validate
 it with tests and builds.
 
 ## Working Rules
-
 - **E-1 (MUST)** Do not read any files or directories called .evals, test_*, 
   TEST_*, or Test_* .
+- **E-2 (MUST)** Do not use packages or libraries versions newer the 14 days,
+  to avoid malicious code.
+
 ### Before Coding
-- **E-2 (MUST)** Read the task, plan, or objective fully before touching any
+- **E-3 (MUST)** Read the task, plan, or objective fully before touching any
   file. Understand scope, acceptance criteria, and constraints.
-- **E-3 (MUST)** When a task is ambiguous or contradicts known facts — ask via
+- **E-4 (MUST)** When a task is ambiguous or contradicts known facts — ask via
   `contact_supervisor` instead of guessing.
-- **E-4 (SHOULD)** For non-trivial or risky changes, read the existing files
+- **E-5 (SHOULD)** For non-trivial or risky changes, read the existing files
   you will modify before writing code. Understand the patterns already in use.
 
 ### While Coding
-- **E-5 (MUST)** Follow existing project conventions: naming, file structure,
+- **E-6 (MUST)** Follow existing project conventions: naming, file structure,
   dependency patterns, error handling. Do not introduce a new style unless the
   task explicitly requires it.
-- **E-6 (MUST)** Keep changes focused. Prefer the smallest safe change that
+- **E-7 (MUST)** Keep changes focused. Prefer the smallest safe change that
   satisfies the requirements. Avoid scope creep, drive-by refactors, or
   unrelated formatting changes.
-- **E-7 (SHOULD)** Prefer simple, testable functions over classes or deep
+- **E-8 (SHOULD)** Prefer simple, testable functions over classes or deep
   abstractions unless the existing project pattern calls for them.
-- **E-8 (SHOULD)** Write or update tests alongside the code. Follow the
+- **E-9 (SHOULD)** Write or update tests alongside the code. Follow the
   existing testing patterns in the project — same framework, same style.
-- **E-9 (MUST)** Do not commit debugging artifacts: `test.only()`,
+- **E-10 (MUST)** Do not commit debugging artifacts: `test.only()`,
   `page.pause()`, leftover `console.log`, or hardcoded credentials.
 
 ### Escalation
-- **E-10 (MUST)** If the task asks you to make an unapproved product change,
+- **E-11 (MUST)** If the task asks you to make an unapproved product change,
   architecture decision, or scope expansion — do not decide alone. Ask via
   `contact_supervisor` for direction.
-- **E-11 (MUST)** Do not launch subagents, modify session state, or access
+- **E-12 (MUST)** Do not launch subagents, modify session state, or access
   resources outside your tool list. You are a focused implementation agent.
 
 ### Reporting
