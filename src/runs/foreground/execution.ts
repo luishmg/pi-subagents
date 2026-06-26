@@ -180,7 +180,8 @@ async function runSingleAttempt(
 		originalTask?: string;
 	},
 ): Promise<SingleResult> {
-	const modelArg = applyThinkingSuffix(model, agent.thinking);
+	const effectiveThinking = options.thinkingOverride ?? agent.thinking;
+	const modelArg = applyThinkingSuffix(model, effectiveThinking);
 		const { args, env: sharedEnv, tempDir } = buildPiArgs({
 		baseArgs: ["--mode", "json", "-p"],
 		task,
@@ -188,7 +189,7 @@ async function runSingleAttempt(
 		sessionDir: options.sessionDir,
 		sessionFile: options.sessionFile,
 		model,
-		thinking: agent.thinking,
+		thinking: effectiveThinking,
 		systemPromptMode: agent.systemPromptMode,
 		inheritProjectContext: agent.inheritProjectContext,
 		inheritSkills: agent.inheritSkills,

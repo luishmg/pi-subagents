@@ -48,13 +48,14 @@ Present the menu of common options plus a custom entry:
 
 | # | Model | Provider | Notes |
 |---|-------|----------|-------|
-| 1 | `deepseek/deepseek-v4-flash` | DeepSeek | Fast, cheap, good for research/coding |
-| 2 | `deepseek/deepseek-v3.2` | DeepSeek | General-purpose |
-| 3 | `moonshotai/kimi-v2.5` | Moonshot AI | General-purpose |
-| 4 | `moonshotai/kimit-v2.7-code` | Moonshot AI | Strong at code/architecture |
-| 5 | `z-ai/glm-5.2` | Z-AI | Good for code generation |
-| 6 | `deepseek/deepseek-r1-0528` | DeepSeek | Strong reasoning, high thinking |
-| 7 | `deepseek/deepseek-v4-pro` | DeepSeek | Most capable |
+| 1 | `openrouter/deepseek/deepseek-v4-flash` | DeepSeek | Fast, cheap, good for research/coding |
+| 2 | `openrouter/deepseek/deepseek-v3.2` | DeepSeek | General-purpose |
+| 3 | `openrouter/moonshotai/kimi-v2.5` | Moonshot AI | General-purpose |
+| 3 | `openrouter/moonshotai/kimi-v2.6` | Moonshot AI | General-purpose |
+| 4 | `openrouter/moonshotai/kimit-v2.7-code` | Moonshot AI | Strong at code/architecture |
+| 5 | `openrouter/z-ai/glm-5.2` | Z-AI | Good for code generation |
+| 6 | `openrouter/deepseek/deepseek-r1-0528` | DeepSeek | Strong reasoning, high thinking |
+| 7 | `openrouter/deepseek/deepseek-v4-pro` | DeepSeek | Most capable |
 | 8 | **Custom** | — | User types any model ID |
 
 If the user chooses Custom, prompt them to type the full model identifier (e.g. `provider/model-id`).

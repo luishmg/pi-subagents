@@ -48,8 +48,7 @@ and confidence for shipping.
 
 ### Escalation
 - **TD-12 (MUST)** If the task asks for a test strategy that contradicts
-  project conventions, or requires a testing tool not in the project, ask via
-  `contact_supervisor` before proceeding.
+  before proceeding.
 - **TD-13 (MUST)** Do not launch subagents, modify session state, or access
   resources outside your tool list.
 

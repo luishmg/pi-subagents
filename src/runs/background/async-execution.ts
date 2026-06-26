@@ -145,6 +145,7 @@ interface AsyncSingleParams {
 	output?: string | boolean;
 	outputMode?: "inline" | "file-only";
 	modelOverride?: string;
+	thinkingOverride?: string;
 	availableModels?: AvailableModelInfo[];
 	maxSubagentDepth: number;
 	worktreeSetupHook?: string;
@@ -331,6 +332,7 @@ export function buildAsyncRunnerSteps(id: string, params: AsyncRunnerStepBuildPa
 			...(s.progress !== undefined ? { progress: s.progress } : {}),
 			...(stepSkillInput !== undefined ? { skills: stepSkillInput } : {}),
 			...(s.model ? { model: s.model } : {}),
+			...(s.thinking ? { thinking: s.thinking } : {}),
 		};
 	};
 	const buildSeqStep = (s: SequentialStep, sessionFile?: string, behaviorCwd?: string, progressPrecreated = false, resolvedBehavior?: ResolvedStepBehavior) => {
@@ -363,7 +365,8 @@ export function buildAsyncRunnerSteps(id: string, params: AsyncRunnerStepBuildPa
 
 		const requestedModel = behavior.model ?? a.model;
 		const primaryModel = resolveSubagentModelOverride(requestedModel, ctx.currentModel, availableModels, ctx.currentModelProvider);
-		const model = applyThinkingSuffix(primaryModel, a.thinking);
+		const effectiveThinking = behavior.thinking ?? a.thinking;
+		const model = applyThinkingSuffix(primaryModel, effectiveThinking);
 		return {
 			parentSessionId: ctx.parentSessionId ?? ctx.currentSessionId,
 			agent: s.agent,
@@ -374,9 +377,9 @@ export function buildAsyncRunnerSteps(id: string, params: AsyncRunnerStepBuildPa
 			structured: Boolean(s.outputSchema),
 			cwd: stepCwd,
 			model,
-			thinking: resolveEffectiveThinking(model, a.thinking),
+			thinking: resolveEffectiveThinking(model, effectiveThinking),
 			modelCandidates: buildModelCandidates(primaryModel, a.fallbackModels, availableModels, ctx.currentModelProvider).map((candidate) =>
-				applyThinkingSuffix(candidate, a.thinking),
+				applyThinkingSuffix(candidate, effectiveThinking),
 			),
 			tools: a.tools,
 			extensions: a.extensions,
@@ -784,7 +787,8 @@ export function executeAsyncSingle(
 		availableModels,
 		ctx.currentModelProvider,
 	);
-	const model = applyThinkingSuffix(primaryModel, agentConfig.thinking);
+	const effectiveThinking = params.thinkingOverride ?? agentConfig.thinking;
+	const model = applyThinkingSuffix(primaryModel, effectiveThinking);
 	let spawnResult: { pid?: number; error?: string } = {};
 	try {
 		spawnResult = spawnRunner(
@@ -797,9 +801,9 @@ export function executeAsyncSingle(
 						task: taskWithOutputInstruction,
 						cwd: runnerCwd,
 						model,
-						thinking: resolveEffectiveThinking(model, agentConfig.thinking),
+						thinking: resolveEffectiveThinking(model, effectiveThinking),
 						modelCandidates: buildModelCandidates(primaryModel, agentConfig.fallbackModels, availableModels, ctx.currentModelProvider).map((candidate) =>
-							applyThinkingSuffix(candidate, agentConfig.thinking),
+							applyThinkingSuffix(candidate, effectiveThinking),
 						),
 						tools: agentConfig.tools,
 						extensions: agentConfig.extensions,

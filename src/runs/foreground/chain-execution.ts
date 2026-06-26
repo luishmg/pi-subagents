@@ -292,6 +292,7 @@ async function runParallelChainTasks(input: ParallelChainRunInput): Promise<Sing
 				orchestratorIntercomTarget: input.orchestratorIntercomTarget,
 				nestedRoute: input.nestedRoute,
 				modelOverride: effectiveModel,
+				thinkingOverride: effectiveThinking,
 				availableModels: input.availableModels,
 				preferredModelProvider: input.ctx.model?.provider,
 				skills: behavior.skills === false ? [] : behavior.skills,
@@ -577,6 +578,7 @@ export async function executeChain(params: ChainExecutionParams): Promise<ChainE
 					...step,
 					task: result.templates[i]!,
 					...(override?.model ? { model: override.model } : {}),
+					...(override?.thinking ? { thinking: override.thinking } : {}),
 					...(override?.output !== undefined ? { output: override.output } : {}),
 					...("outputMode" in step && step.outputMode !== undefined ? { outputMode: step.outputMode } : {}),
 					...(override?.reads !== undefined ? { reads: override.reads } : {}),
@@ -1046,6 +1048,7 @@ export async function executeChain(params: ChainExecutionParams): Promise<ChainE
 					availableModels,
 					ctx.model?.provider,
 				);
+			const effectiveThinking = tuiOverride?.thinking ?? seqStep.thinking ?? agentConfig.thinking;
 
 			const outputPath = typeof behavior.output === "string"
 				? (path.isAbsolute(behavior.output) ? behavior.output : path.join(chainDir, behavior.output))
@@ -1097,6 +1100,7 @@ export async function executeChain(params: ChainExecutionParams): Promise<ChainE
 				orchestratorIntercomTarget,
 				nestedRoute: params.nestedRoute,
 				modelOverride: effectiveModel,
+				thinkingOverride: effectiveThinking,
 				availableModels,
 				preferredModelProvider: ctx.model?.provider,
 				skills: behavior.skills === false ? [] : behavior.skills,

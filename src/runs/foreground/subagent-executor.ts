@@ -110,6 +110,7 @@ interface TaskParam {
 	reads?: string[] | boolean;
 	progress?: boolean;
 	model?: string;
+	thinking?: string;
 	skill?: string | string[] | boolean;
 	acceptance?: AcceptanceInput;
 }
@@ -140,6 +141,7 @@ export interface SubagentParamsLike {
 	artifacts?: boolean;
 	includeProgress?: boolean;
 	model?: string;
+	thinking?: string;
 	skill?: string | string[] | boolean;
 	output?: string | boolean;
 	outputMode?: "inline" | "file-only";
@@ -1538,12 +1540,16 @@ function runAsyncPath(data: ExecutionContextData, deps: ExecutorDeps): AgentTool
 		const modelOverrides = params.tasks.map((task, index) =>
 			resolveSubagentModelOverride(task.model ?? agentConfigs[index]?.model, ctx.model, availableModels, currentProvider),
 		);
+		const thinkingOverrides = params.tasks.map((task, index) =>
+			task.thinking ?? agentConfigs[index]?.thinking,
+		);
 		const skillOverrides = params.tasks.map((task) => normalizeSkillInput(task.skill));
 		const parallelTasks = params.tasks.map((task, index) => ({
 			agent: task.agent,
 			task: shouldForkAgent(contextPolicy, task.agent) ? wrapForkTask(task.task) : task.task,
 			cwd: task.cwd,
 			...(modelOverrides[index] ? { model: modelOverrides[index] } : {}),
+			...(thinkingOverrides[index] ? { thinking: thinkingOverrides[index] } : {}),
 			...(skillOverrides[index] !== undefined ? { skill: skillOverrides[index] } : {}),
 			...(task.output === true ? (agentConfigs[index]?.output ? { output: agentConfigs[index]!.output } : {}) : task.output !== undefined ? { output: task.output } : {}),
 			...(task.outputMode !== undefined ? { outputMode: task.outputMode } : {}),
@@ -1624,6 +1630,7 @@ function runAsyncPath(data: ExecutionContextData, deps: ExecutorDeps): AgentTool
 		const skills = normalizedSkills === false ? [] : normalizedSkills;
 		const maxSubagentDepth = resolveChildMaxSubagentDepth(currentMaxSubagentDepth, a.maxSubagentDepth);
 		const modelOverride = resolveSubagentModelOverride((params.model as string | undefined) ?? a.model, ctx.model, availableModels, currentProvider);
+		const thinkingOverride = params.thinking ?? a.thinking;
 		return executeAsyncSingle(id, {
 			agent: params.agent!,
 			task: shouldForkAgent(contextPolicy, params.agent!) ? wrapForkTask(params.task ?? "") : (params.task ?? ""),
@@ -1641,6 +1648,7 @@ function runAsyncPath(data: ExecutionContextData, deps: ExecutorDeps): AgentTool
 			output: effectiveOutput,
 			outputMode: effectiveOutputMode,
 			modelOverride,
+			thinkingOverride,
 			maxSubagentDepth,
 			worktreeSetupHook: deps.config.worktreeSetupHook,
 			worktreeSetupHookTimeoutMs: deps.config.worktreeSetupHookTimeoutMs,
@@ -1805,6 +1813,7 @@ interface ForegroundParallelRunInput {
 	maxSubagentDepths: number[];
 	availableModels: ModelInfo[];
 	modelOverrides: (string | undefined)[];
+	thinkingOverrides: (string | undefined)[];
 	behaviors: Array<ReturnType<typeof resolveStepBehavior>>;
 	firstProgressIndex: number;
 	controlConfig: ResolvedControlConfig;
@@ -1975,6 +1984,7 @@ async function runForegroundParallelTasks(input: ForegroundParallelRunInput): Pr
 			orchestratorIntercomTarget: input.orchestratorIntercomTarget,
 			nestedRoute: input.foregroundControl?.nestedRoute,
 			modelOverride: input.modelOverrides[index],
+			thinkingOverride: input.thinkingOverrides[index],
 			availableModels: input.availableModels,
 			preferredModelProvider: input.ctx.model?.provider,
 			skills: effectiveSkills === false ? [] : effectiveSkills,
@@ -2096,9 +2106,13 @@ async function runParallelPath(data: ExecutionContextData, deps: ExecutorDeps): 
 		...(task.progress !== undefined ? { progress: task.progress } : {}),
 		...(skillOverrides[index] !== undefined ? { skills: skillOverrides[index] } : {}),
 		...(task.model ? { model: task.model } : {}),
+		...(task.thinking ? { thinking: task.thinking } : {}),
 	}));
 	const modelOverrides: (string | undefined)[] = tasks.map((_, i) =>
 		resolveSubagentModelOverride(behaviorOverrides[i]?.model ?? agentConfigs[i]?.model, ctx.model, availableModels, currentProvider),
+	);
+	const thinkingOverrides: (string | undefined)[] = tasks.map((_, i) =>
+		behaviorOverrides[i]?.thinking ?? agentConfigs[i]?.thinking,
 	);
 
 	if (params.clarify === true && ctx.hasUI) {
@@ -2135,6 +2149,10 @@ async function runParallelPath(data: ExecutionContextData, deps: ExecutorDeps): 
 			if (override?.model) {
 				modelOverrides[i] = override.model;
 				behaviorOverrides[i]!.model = override.model;
+			}
+			if (override?.thinking) {
+				thinkingOverrides[i] = override.thinking;
+				behaviorOverrides[i]!.thinking = override.thinking;
 			}
 			if (override?.output !== undefined) behaviorOverrides[i]!.output = override.output;
 			if (override?.reads !== undefined) behaviorOverrides[i]!.reads = override.reads;
@@ -2264,6 +2282,7 @@ async function runParallelPath(data: ExecutionContextData, deps: ExecutorDeps): 
 			progressDir: parallelProgressDir,
 			availableModels,
 			modelOverrides,
+			thinkingOverrides,
 			behaviors,
 			firstProgressIndex: parallelProgressPrecreated ? -1 : firstProgressIndex,
 			controlConfig,
@@ -2398,6 +2417,7 @@ async function runSinglePath(data: ExecutionContextData, deps: ExecutorDeps): Pr
 		availableModels,
 		currentProvider,
 	);
+	let thinkingOverride: string | undefined = params.thinking ?? agentConfig.thinking;
 	let skillOverride: string[] | false | undefined = normalizeSkillInput(params.skill);
 	const rawOutput = params.output !== undefined ? params.output : agentConfig.output;
 	let effectiveOutput = normalizeSingleOutputOverride(rawOutput, agentConfig.output);
@@ -2434,6 +2454,7 @@ async function runSinglePath(data: ExecutionContextData, deps: ExecutorDeps): Pr
 		task = result.templates[0]!;
 		const override = result.behaviorOverrides[0];
 		if (override?.model) modelOverride = override.model;
+		if (override?.thinking) thinkingOverride = override.thinking;
 		if (override?.output !== undefined) effectiveOutput = normalizeSingleOutputOverride(override.output, agentConfig.output);
 		if (override?.skills !== undefined) skillOverride = override.skills;
 
@@ -2474,6 +2495,7 @@ async function runSinglePath(data: ExecutionContextData, deps: ExecutorDeps): Pr
 				output: effectiveOutput,
 				outputMode: effectiveOutputMode,
 				modelOverride,
+				thinkingOverride,
 				maxSubagentDepth,
 				worktreeSetupHook: deps.config.worktreeSetupHook,
 				worktreeSetupHookTimeoutMs: deps.config.worktreeSetupHookTimeoutMs,
@@ -2563,6 +2585,7 @@ async function runSinglePath(data: ExecutionContextData, deps: ExecutorDeps): Pr
 		nestedRoute: foregroundControl?.nestedRoute,
 		index: 0,
 		modelOverride,
+		thinkingOverride,
 		availableModels,
 		preferredModelProvider: currentProvider,
 		skills: effectiveSkills,
