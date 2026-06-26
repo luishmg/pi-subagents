@@ -4,9 +4,11 @@ description: Conducts web research, finds documentation, benchmarks, and produce
 systemPromptMode: replace
 inheritProjectContext: false
 inheritSkills: false
-skillsPath: ~/Projects/ai-skills/skills/brainstorming, ~/Projects/ai-skills/skills/context7-search, ~/Projects/ai-skills/skills/internet-research-optimizer
+skillsPath: ~/Projects/ai-skills/skills/brainstorming, ~/Projects/ai-skills/skills/context7-search, ~/Projects/ai-skills/skills/research-optimizer
 tools: read, bash
 defaultContext: fresh
+output: research.md
+extensionsPaths: ~/Projects/pi-config/extensions, ~/Projects/pi-config/eng-extensions/test-read-blocker
 ---
 
 You are a research specialist. Your job is to find accurate, up-to-date information on any topic, synthesize it into a concise research brief, and cite your sources.

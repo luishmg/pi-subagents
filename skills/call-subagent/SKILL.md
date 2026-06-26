@@ -51,12 +51,12 @@ Present the menu of common options plus a custom entry:
 | 1 | `openrouter/deepseek/deepseek-v4-flash` | DeepSeek | Fast, cheap, good for research/coding |
 | 2 | `openrouter/deepseek/deepseek-v3.2` | DeepSeek | General-purpose |
 | 3 | `openrouter/moonshotai/kimi-v2.5` | Moonshot AI | General-purpose |
-| 3 | `openrouter/moonshotai/kimi-v2.6` | Moonshot AI | General-purpose |
-| 4 | `openrouter/moonshotai/kimit-v2.7-code` | Moonshot AI | Strong at code/architecture |
-| 5 | `openrouter/z-ai/glm-5.2` | Z-AI | Good for code generation |
-| 6 | `openrouter/deepseek/deepseek-r1-0528` | DeepSeek | Strong reasoning, high thinking |
-| 7 | `openrouter/deepseek/deepseek-v4-pro` | DeepSeek | Most capable |
-| 8 | **Custom** | — | User types any model ID |
+| 4 | `openrouter/moonshotai/kimi-v2.6` | Moonshot AI | General-purpose |
+| 5 | `openrouter/moonshotai/kimit-v2.7-code` | Moonshot AI | Strong at code/architecture |
+| 6 | `openrouter/z-ai/glm-5.2` | Z-AI | Good for code generation |
+| 7 | `openrouter/deepseek/deepseek-r1-0528` | DeepSeek | Strong reasoning, high thinking |
+| 8 | `openrouter/deepseek/deepseek-v4-pro` | DeepSeek | Most capable |
+| 9 | **Custom** | — | User types any model ID |
 
 If the user chooses Custom, prompt them to type the full model identifier (e.g. `provider/model-id`).
 
@@ -73,37 +73,9 @@ If the user chooses Custom, prompt them to type the full model identifier (e.g. 
 | 5 | `high` | Deep reasoning |
 | 6 | `xhigh` | Maximum reasoning |
 
-### Step 5 — Apply Configuration to Agent File
+### Step 5 — Confirm and Optionally Invoke
 
-Edit the agent's `.md` file to add or update the `model` and `thinking` fields in the YAML frontmatter.
-
-**Use the `edit` tool** with exact text matching. Two cases:
-
-**Case A: `model` field already exists** — replace its value:
-```
-model: <old-value>
-```
-↓
-```
-model: <new-value>
-```
-
-**Case B: `model` field does not exist** — insert it after the `description` line (or after `name` if description is absent) and before `thinking` (or after an appropriate anchor). Find a unique anchor line to insert after. For example, if the file has:
-```
-description: Writes automated tests
-```
-Insert after it:
-```
-model: <new-value>
-```
-
-Same approach for the `thinking` field — update if exists, insert if not.
-
-**Always read the file first** to verify current frontmatter before editing.
-
-### Step 6 — Confirm and Optionally Invoke
-
-Show the user a summary of what was configured:
+Show the user a summary of what was configured (configuration is in-memory for this session, not written to the agent file):
 
 ```
 Agent: <name>
@@ -114,7 +86,7 @@ Thinking: <thinking>
 
 Ask if they want to invoke the agent now:
 - **Yes** — use the `subagent` tool: `{ agent: "<name>", task: "<user's original task or ask for a task>" }`
-- **No** — just confirm the changes were saved.
+- **No** — just confirm the configuration.
 
 ---
 
