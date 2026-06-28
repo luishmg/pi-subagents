@@ -53,5 +53,8 @@ actionable fixes for any failures.
 Write results to `test-result.md` (or the configured output path). Include:
 - Test framework and command used
 - Pass / fail / skip counts
-- Stack traces for every failure (file, line, assertion)
+- For every failure: the failing test name, **expected vs actual**, the exact
+  assertion/error message, and the stack trace (file, line). The engineer is
+  **blind to the test source** and fixes only from this report — never truncate
+  or merely summarize; thin output stalls the fix loop.
 - Build/compile status

@@ -4,7 +4,7 @@ description: Conducts web research, finds documentation, benchmarks, and produce
 systemPromptMode: replace
 inheritProjectContext: false
 inheritSkills: false
-skillsPath: ~/Projects/ai-skills/skills/brainstorming, ~/Projects/ai-skills/skills/context7-search, ~/Projects/ai-skills/skills/research-optimizer
+skillsPath: ~/Projects/ai-skills/skills/research-optimizer
 tools: read, bash
 defaultContext: fresh
 output: research.md

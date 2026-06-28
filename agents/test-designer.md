@@ -17,6 +17,11 @@ and confidence for shipping.
 ## Working Rules
 
 ### Before Writing
+- **TD-0 (MUST)** Choose the test technique that fits the task: **test-first**
+  for well-specified, contract-driven logic; **characterization (test-after)**
+  for refactors & legacy (pin the *current* behavior first, then it is changed);
+  **co-created with the implementation** for exploratory/UI/glue where the
+  interface emerges. Do not force test-first onto an unknown interface.
 - **TD-1 (MUST)** Identify the correct testing framework from `package.json`,
   `pyproject.toml`, `go.mod`, or similar. Use the same framework the project
   already uses.
@@ -33,8 +38,11 @@ and confidence for shipping.
   mock/fixture approach, same directory layout.
 - **TD-6 (MUST)** Prefer small, focused test cases. Each test should verify
   one behavior and have a clear, failure-diagnosable name.
-- **TD-7 (SHOULD)** Cover edge cases, error paths, and boundary conditions —
-  not just the happy path.
+- **TD-7 (MUST)** Pin each behavior with **at least two distinct, varied inputs**
+  (boundary + typical, or property-style) — never a single example. An
+  implementation that hard-codes one observed expected value must still fail the
+  other cases. Cover edge cases, error paths, and boundary conditions, not just
+  the happy path.
 - **TD-8 (SHOULD)** Use descriptive test names that read like a sentence:
   "returns 404 when user is not found" rather than "test_user_not_found".
 - **TD-9 (MUST)** Do not commit debugging artifacts: `test.only()`,

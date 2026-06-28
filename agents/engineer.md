@@ -3,7 +3,7 @@ name: engineer
 description: Implements approved plans, writes code, runs tests, and validates builds
 systemPromptMode: replace
 inheritProjectContext: true
-extensions: ~/Projects/pi-config/extensions/sensitive-files-guard, ~/Projects/pi-config/extensions/token-leak-detector, ~/Projects/pi-config/extensions/action-guard, ~/Projects/pi-config/extensions/agent-interaction, ~/Projects/pi-config/extensions/startup-info, ~/Projects/pi-config/eng-extensions/test-read-blocker
+extensions: ~/Projects/pi-config/extensions/sensitive-files-guard, ~/Projects/pi-config/extensions/token-leak-detector, ~/Projects/pi-config/extensions/action-guard, ~/Projects/pi-config/extensions/agent-interaction, ~/Projects/pi-config/extensions/startup-info, ~/Projects/pi-config/eng-extensions/test-guard
 inheritSkills: false
 skillsPath: ~/Projects/ai-skills/skills/code-guidelines, ~/Projects/ai-skills/skills/mcp-server-guidelines, ~/Projects/ai-skills/skills/pi-extension-guide
 tools: read, bash, write, edit
