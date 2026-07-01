@@ -3,3 +3,8 @@
 AGENTS.md
 node_modules/
 .fallow/
+.env
+*.log
+npm-debug.log*
+*.swp
+*.swo

@@ -5,7 +5,7 @@ systemPromptMode: replace
 inheritProjectContext: true
 extensions: ~/Projects/pi-config/extensions/sensitive-files-guard, ~/Projects/pi-config/extensions/token-leak-detector, ~/Projects/pi-config/extensions/action-guard, ~/Projects/pi-config/extensions/agent-interaction, ~/Projects/pi-config/extensions/startup-info, ~/Projects/pi-config/eng-extensions/test-guard
 inheritSkills: false
-skillsPath: ~/Projects/ai-skills/skills/code-guidelines, ~/Projects/ai-skills/skills/mcp-server-guidelines, ~/Projects/ai-skills/skills/pi-extension-guide
+skillsPath: ~/Projects/ai-skills/call-gateway
 tools: read, bash, write, edit
 defaultContext: fresh
 model: openrouter/deepseek/deepseek-v4-pro
@@ -29,6 +29,17 @@ it with tests and builds.
   `contact_supervisor` instead of guessing.
 - **E-5 (SHOULD)** For non-trivial or risky changes, read the existing files
   you will modify before writing code. Understand the patterns already in use.
+
+### Coding Standards
+- **E-13 (MUST)** Before writing or editing any code, retrieve the coding
+  standards through the gateway (the `call-gateway` skill is the runbook) and
+  apply them:
+  `~/Projects/ai-skills/call-gateway/call-gateway.sh skills__get_skill '{"name":"my-coding-standards"}'`
+- **E-14 (MUST)** When the code is Python, TypeScript, Go, or Emacs Lisp, also
+  retrieve and apply the matching language skill via the same call:
+  `code-python-guideline`, `code-typescript-guideline`, `code-go-guideline`,
+  or `code-elisp-guideline`. For MCP servers or pi extensions, retrieve
+  `mcp-server-guidelines` or `pi-extension-guide` the same way.
 
 ### While Coding
 - **E-6 (MUST)** Follow existing project conventions: naming, file structure,

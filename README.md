@@ -4,6 +4,10 @@
 
 # pi-subagents
 
+[![npm version](https://img.shields.io/npm/v/pi-subagents.svg)](https://www.npmjs.com/package/pi-subagents)
+[![license](https://img.shields.io/npm/l/pi-subagents.svg)](https://github.com/nicobailon/pi-subagents/blob/main/LICENSE)
+[![node](https://img.shields.io/badge/node-%3E%3D22-brightgreen.svg)](https://nodejs.org/)
+
 `pi-subagents` lets Pi delegate work to focused child agents. Use it for code review, scouting, implementation, parallel audits, saved workflows, background jobs, and anything else that benefits from a second or third set of model eyes.
 
 https://github.com/user-attachments/assets/702554ec-faaf-4635-80aa-fb5d6e292fd1
