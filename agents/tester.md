@@ -5,7 +5,7 @@ thinking: high
 systemPromptMode: replace
 inheritProjectContext: true
 inheritSkills: false
-skillsPath: ~/Projects/ai-skills/test-skills
+skillsPath: ~/Projects/ai-skills/call-gateway
 tools: read, bash
 output: test-result.md
 defaultReads: context.md

@@ -1,6 +1,6 @@
 ---
 name: engineer
-description: Implements approved plans, writes code, runs tests, and validates builds
+description: Implements approved plans, writes code, runs tests, and validates builds; loads coding guidelines via the coding-context-router skill
 systemPromptMode: replace
 inheritProjectContext: true
 extensions: ~/Projects/pi-config/extensions/sensitive-files-guard, ~/Projects/pi-config/extensions/token-leak-detector, ~/Projects/pi-config/extensions/action-guard, ~/Projects/pi-config/extensions/agent-interaction, ~/Projects/pi-config/extensions/startup-info, ~/Projects/pi-config/eng-extensions/test-guard
@@ -31,15 +31,10 @@ it with tests and builds.
   you will modify before writing code. Understand the patterns already in use.
 
 ### Coding Standards
-- **E-13 (MUST)** Before writing or editing any code, retrieve the coding
-  standards through the gateway (the `call-gateway` skill is the runbook) and
-  apply them:
-  `~/Projects/ai-skills/call-gateway/call-gateway.sh skills__get_skill '{"name":"my-coding-standards"}'`
-- **E-14 (MUST)** When the code is Python, TypeScript, Go, or Emacs Lisp, also
-  retrieve and apply the matching language skill via the same call:
-  `code-python-guideline`, `code-typescript-guideline`, `code-go-guideline`,
-  or `code-elisp-guideline`. For MCP servers or pi extensions, retrieve
-  `mcp-server-guidelines` or `pi-extension-guide` the same way.
+- **E-13 (MUST)** Before writing or planning any code, load and run the
+  `coding-context-router` skill and follow it — it detects the languages/task
+  type and tells you which guideline skills to retrieve and apply:
+  `~/Projects/ai-skills/call-gateway/call-gateway.sh skills__get_skill '{"name":"coding-context-router"}'`
 
 ### While Coding
 - **E-6 (MUST)** Follow existing project conventions: naming, file structure,
